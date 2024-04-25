@@ -1,0 +1,26 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+.welcome-text {
+    padding-top: 10%;
+}
+
+.slider {
+    height: 500px;
+    margin: 0px;
+}
+
+.card {
+    width: 18rem !important;
+}
+
+@media only screen and (max-width: 600px) {
+    .welcome-text {
+        display: none;
+    }
+    .card {
+        width: 100% !important;
+    }
+}
