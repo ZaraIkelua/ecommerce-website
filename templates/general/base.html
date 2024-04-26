@@ -51,7 +51,7 @@
                             </li>
                         </ul>
                         <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <input class="form-control me-2" id="search_input_box" type="search" placeholder="Search" aria-label="Search">
                             <button class="btn btn-outline-success" type="submit">Search</button>
                         </form>
                     </div>
@@ -73,6 +73,29 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
+
+    <script>
+        async function fetchData(url) {
+            try {
+                // Making the fetch request to the URL
+                const response = await fetch(url);
+
+                // Checking if the response is successful
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                // Parsing the JSON response
+                const data = await response.json();
+                return data;
+            } catch (error) {
+                // Handling any errors that occur during the fetch or parsing process
+                console.error('Failed to fetch data:', error);
+            }
+        }
+
+        var currentPage = 1;
+    </script>
 </body>
 
 </html>

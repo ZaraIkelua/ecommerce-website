@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
 
@@ -11,8 +12,9 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     price = models.FloatField()
-    discound = models.FloatField(default=0)
+    discount = models.FloatField(default=0)
     description = models.TextField()
+    image = models.ImageField(upload_to='products/')
     added_on = models.DateTimeField(auto_now=True)
 
 

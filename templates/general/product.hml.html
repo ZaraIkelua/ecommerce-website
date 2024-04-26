@@ -1,0 +1,18 @@
+{% include 'general/base.html' %} {% load static %}
+
+<div class="container product-details">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="path_to_product_image.jpg" alt="Product Image" class="product-image">
+        </div>
+        <div class="col-md-6">
+            <h2 class="fw-bold">Product Title</h2>
+            <p class="text-muted"><del>$199.99</del> $149.99 <span class="badge bg-success">25% Off</span></p>
+            <p>Description of the product goes here. It's detailed enough to give all the relevant information the customer might need to make an informed decision.</p>
+        </div>
+    </div>
+</div>
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'shop.js' %}"></script>
+{% endblock %}
