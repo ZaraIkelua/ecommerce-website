@@ -30,24 +30,13 @@
                                 <a class="nav-link active" aria-current="page" href="{% url 'homepage' %}">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Orders</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    Dropdown
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
+                                <a class="nav-link" href="{% url 'shop' %}">Shop</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                                <a class="nav-link" href="#">Orders</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Orders</a>
                             </li>
                         </ul>
                         <form class="d-flex" role="search">
@@ -59,7 +48,19 @@
             </nav>
         </div>
 
-        <div id="body">
+        <div id="cart_div">
+            <span class="text-white" style="position: absolute; right: 7%; margin-top: 25px;">{{request.user.username}}</span>
+            <a href="/cart" class="btn btn-secondary my-3" style="position: absolute; right: 10px;">Cart(<span id="cart-value">5</span>)</a>
+        </div>
+
+        <div id="body" style="margin-top: 80px;">
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li {% if message.tags %}class="alert {{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </div>
     </div>
 
@@ -92,6 +93,14 @@
                 // Handling any errors that occur during the fetch or parsing process
                 console.error('Failed to fetch data:', error);
             }
+        }
+
+        function readQueryParam(key) {
+            // Create URLSearchParams object from the current URL's query string
+            const params = new URLSearchParams(window.location.search);
+
+            // Get the value of the specified key
+            return params.get(key);
         }
 
         var currentPage = 1;

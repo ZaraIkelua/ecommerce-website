@@ -53,7 +53,7 @@ function load_next_data() {
                         <span>${product.discount}</span>
                         <p>${product.description}</p>
                     </p>
-                    <a href="/product_detail" class="btn btn-primary">Know More!</a>
+                    <a href="/product/${product.id}" class="btn btn-primary">Know More!</a>
                 </div>
             </div>
 

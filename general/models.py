@@ -14,7 +14,7 @@ class Product(models.Model):
     price = models.FloatField()
     discount = models.FloatField(default=0)
     description = models.TextField()
-    image = models.ImageField(upload_to='products/')
+    image = models.URLField()
     added_on = models.DateTimeField(auto_now=True)
 
 
@@ -24,7 +24,7 @@ class Order(models.Model):
 
 
 class OrderProduct(models.Model):
-    user = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     price = models.FloatField()
@@ -37,6 +37,9 @@ class Cart(models.Model):
 
 
 class CartProduct(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
 
+    class Meta:
+        unique_together = ('product', 'cart')
