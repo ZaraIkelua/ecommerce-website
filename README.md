@@ -22,7 +22,16 @@ This is clothing e-commerce web application that was conceptualise, design, and 
    ```
    pip install -r requirements.txt
    ```
-6. # Start the Server
+6. Create superuser 
+   ```
+   python manage.py createsuperuser
+   ```
+7. Migrate all the database
+   ```
+   python manage.py migrate
+   ```
+
+8. # Start the Server
    ## To run on Local Machine
    ```
    python3 manage.py runserver
@@ -31,12 +40,5 @@ This is clothing e-commerce web application that was conceptualise, design, and 
    ```
    python3 manage.py runserver 0.0.0.0:8000
    ```
-7. Migrate all the database
-   ```
-   python manage.py migrate
-   ```
-8. Create superuser 
-   ```
-   python manage.py createsuperuser
-   ```
+
 
