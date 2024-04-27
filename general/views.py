@@ -1,9 +1,11 @@
+from uuid import uuid4
 from django.contrib import messages
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 
 from utils.auth import login_required
+from utils.models import OrderMapper
 from .models import Product, Cart, CartProduct, Order, OrderProduct
 
 
@@ -13,7 +15,7 @@ def homepage(request):
 
 
 def shop(request):
-    return render(request, "general/shop.html")
+    return render(request, "general/shop.html", {'search': True})
 
 
 def products_list(request):
@@ -81,13 +83,15 @@ def add_to_cart(request):
     except Exception:
         messages.error(request, "Failed to add this product in cart")
         return redirect('product_details', pk=product_id)
-
+    
 
 @login_required
 def cart(request):
     carts = CartProduct.objects.filter(cart__user=request.user)
-    context = {"cart": carts}
-
+    search = request.GET.get('search', '')
+    if search and search.strip() != '':
+        carts = carts.filter(product__name__icontains=search)
+    context = {"cart": carts, 'search': True}
     return render(request, 'general/cart.html', context)
 
 
@@ -100,7 +104,6 @@ def delete_from_cart(request):
         messages.success(request, "Product removed successfully.")
         return redirect('cart')
     except Exception as error:
-        print(error)
         messages.error(request, "Failed to delete product from cart.")
         return redirect("cart")
 
@@ -118,7 +121,7 @@ def checkout(request):
 @login_required
 def final_order(request):
     try:
-        order = Order.objects.create(user=request.user)
+        order = Order.objects.create(user=request.user, transaction_id=uuid4())
         carts = CartProduct.objects.filter(cart__user=request.user)
         for cartproduct in carts:
             OrderProduct.objects.create(
@@ -130,9 +133,16 @@ def final_order(request):
                 final_price=cartproduct.product.price - ((cartproduct.product.price * cartproduct.product.discount) / 100)
             )
             cartproduct.delete()
+        
 
         messages.success(request, "Order placed successfully!")
         return redirect('shop')
     except Exception as error:
         messages.error(request, str(error))
         return redirect('shop')
+
+
+def order(request):
+    orders = Order.objects.filter(user=request.user)
+    context = {'orders': [OrderMapper(order) for order in orders]}
+    return render(request, "general/order.html", context)

@@ -1,6 +1,8 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+
+from utils.auth import login_required
 from .forms import SignUpForm, SignInForm
 
 
@@ -30,6 +32,7 @@ def signin(request):
             user = authenticate(username=username, password=password)
             if user is not None and not user.is_superuser:
                 login(request, user)
+                print("Login successful")
                 return redirect('homepage')
             else:
                 form.add_error(None, 'Username or Password not correct')
@@ -38,3 +41,10 @@ def signin(request):
     else:
         form = SignInForm()
     return render(request, 'accounts/signin.html', {'form': form})
+
+
+@login_required
+def signout(request):
+    logout(request)
+    messages.success(request, "Signed out successfully")
+    return redirect("signin")

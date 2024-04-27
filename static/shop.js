@@ -1,3 +1,16 @@
+pageData = {
+    currentPage: 1
+}
+
+function readQueryParam(key) {
+    // Create URLSearchParams object from the current URL's query string
+    const params = new URLSearchParams(window.location.search);
+
+    // Get the value of the specified key
+    keyValue = params.get(key);
+    return keyValue != null ? keyValue : ''
+}
+
 function makePlaceholder() {
     return `
         <div class="card mt-3" aria-hidden="true">
@@ -30,16 +43,21 @@ function addPlaceholder() {
     document.getElementById("shop_data").appendChild(div_el);
 }
 
-function load_next_data() {
+function load_next_data(step=0) {
     addPlaceholder();
-    fetchData(`/products?search=${document.getElementById('search_input_box').value}&page=${currentPage}`).then(data => {
+    currentPage = pageData.currentPage + step
+    fetchData(`/products?search=${readQueryParam('search')}&page=${currentPage+step}`).then(data => {
         let products_data = data.response;
         shop_field = document.getElementById('shop_data');
 
         if (products_data.length > 0) {
             document.getElementById('placeholder').remove();
-        } else {
+        } else if(pageData.currentPage + step == 1) {
             document.getElementById('placeholder').innerHTML = '<h1 class="text-center text-white">No products available</h1>'
+            document.getElementById('pagination').remove()
+        } else {
+            document.getElementById('placeholder').remove()
+            document.getElementById('pagination').remove()
         }
         products_data.forEach(product => {
             console.log(products_data)
@@ -60,7 +78,9 @@ function load_next_data() {
             `
             shop_field.innerHTML += next_div
         })
+        pageData.currentPage = currentPage
     })
+    console.log(pageData)
 }
 
 window.onload = () => load_next_data();

@@ -1,0 +1,31 @@
+{% include 'general/base.html' %} {% load static %} {% load discounted_price %}
+
+<div class="accordion">
+    {% for order in orders %}
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button bg-dark text-white" type="button"
+                aria-expanded="true">
+                # Order {{order.order.id}}
+            </button>
+        </h2>
+        <div class="accordion-collapse collapse show bg-dark">
+            <div class="accordion-body">
+                {% for orderproduct in order.orderproduct %}
+                <div class="col-md-12 text-white my-2">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <img src="{{orderproduct.product.image}}" style="max-height: 60px; max-width: 60px; cursor: pointer;">
+                        </div>
+                        <div class="col-md-9">
+                            {{orderproduct.product.name}} ({{orderproduct.product.category.name}})
+                        </div>
+                        <div class="col-md-2 text-right">${{orderproduct.final_price}} x {{orderproduct.quantity}}</div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>

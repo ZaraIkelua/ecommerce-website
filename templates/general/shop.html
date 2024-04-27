@@ -1,10 +1,12 @@
 {% include 'general/base.html' %} {% load static %}
 
+{% block content %}
 <div class="container">
     <div class="row m-5" id="shop_data">
     </div>
+    <button type="button" class="btn btn-secondary" id="pagination" onclick="load_next_data(1);">Next</button>
 </div>
-
+{% endblock %}
 
 {% block javascript %}
 <script type="text/javascript" src="{% static 'shop.js' %}"></script>

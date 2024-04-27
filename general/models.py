@@ -21,6 +21,7 @@ class Product(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_time = models.DateTimeField(auto_now=True)
+    transaction_id = models.UUIDField(null=True, auto_created=True)
 
 
 class OrderProduct(models.Model):
