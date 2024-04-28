@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-t6(del5n#(5t%dgq_=v6urgt!$=!a&3+d#wlqq4eq#5)frcv9d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['heartminus-roundgamma-8000.codio-box.uk', 'localhost']
 
 
 # Application definition
