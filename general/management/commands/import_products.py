@@ -15,11 +15,11 @@ class Command(BaseCommand):
         filename = options['filename']
 
         # Check if file exists in the project root directory
-        if not os.path.exists(filename):
+        if not os.path.exists(os.path.join('general', 'product_data', filename)):
             raise CommandError('File "{}" does not exist'.format(filename))
 
         try:
-            with open(filename, newline='', encoding='utf-8') as csvfile:
+            with open(os.path.join('general', 'product_data', filename), newline='', encoding='utf-8') as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
                     try:
