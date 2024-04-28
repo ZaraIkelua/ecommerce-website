@@ -28,6 +28,7 @@ SECRET_KEY = 'django-insecure-t6(del5n#(5t%dgq_=v6urgt!$=!a&3+d#wlqq4eq#5)frcv9d
 DEBUG = True
 
 ALLOWED_HOSTS = ['heartminus-roundgamma-8000.codio-box.uk', 'localhost']
+CSRF_TRUSTED_ORIGINS =  ['http://zara1999.pythonanywhere.com/','https://heartminus-roundgamma-8000.codio-box.uk/']
 
 
 # Application definition
