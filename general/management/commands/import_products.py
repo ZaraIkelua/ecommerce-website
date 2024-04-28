@@ -21,25 +21,24 @@ class Command(BaseCommand):
         try:
             with open(filename, newline='', encoding='utf-8') as csvfile:
                 reader = csv.DictReader(csvfile)
-                with transaction.atomic():
-                    for row in reader:
-                        try:
-                            category_name = row['category']
-                            category, created = Category.objects.get_or_create(name=category_name)
+                for row in reader:
+                    try:
+                        category_name = row['category']
+                        category, created = Category.objects.get_or_create(name=category_name)
 
-                            discount = random.uniform(0, 0.1) * float(row['price'])  # up to 10% discount
+                        discount = random.uniform(0, 0.1) * float(row['price'])  # up to 10% discount
 
-                            Product.objects.create(
-                                name=row['name'],
-                                category=category,
-                                price=float(row['price']),
-                                discount=discount,
-                                description=row['description'],
-                                image=eval(row['images'])[0]
-                            )
-                        except Exception as error:
-                            print(error)
-                            continue
+                        Product.objects.create(
+                            name=row['name'],
+                            category=category,
+                            price=float(row['price']),
+                            discount=discount,
+                            description=row['description'],
+                            image=eval(row['images'])[0]
+                        )
+                    except Exception as error:
+                        print(error)
+                        continue
 
         except Exception as e:
             raise CommandError('Failed to import products: {}'.format(str(e)))

@@ -141,7 +141,7 @@ def final_order(request):
         messages.error(request, str(error))
         return redirect('shop')
 
-
+@login_required
 def order(request):
     orders = Order.objects.filter(user=request.user)
     context = {'orders': [OrderMapper(order) for order in orders]}
